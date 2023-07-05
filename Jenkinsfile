@@ -20,6 +20,12 @@ pipeline {
             }
         }
 
+        stage('Docker pull base image') {
+            steps {
+                sh 'docker pull free5gc/nrf-base'
+            }
+        }
+
         stage('docker build') {
             steps {
                 sh(script: """
