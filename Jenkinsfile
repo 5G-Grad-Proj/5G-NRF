@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh(script: """
                     docker images -a
-                    docker build -t gradproj/5G-NRF:latest . 
+                    docker build -t gradproj/5g-nrf:latest . 
                     docker images -a
                 """)
                     }
@@ -32,7 +32,7 @@ pipeline {
         
         stage('Pushing to Dockerhub') {
             steps {
-                sh 'docker push gradproj/5G-NRF:latest'
+                sh 'docker push gradproj/5g-nrf:latest'
             }
         }
 
@@ -56,7 +56,7 @@ pipeline {
 
         stage('Deploy to EKS') {
                 steps {
-                    sh 'docker push gradproj/5G-NRF:latest'
+                    sh 'docker push gradproj/5g-nrf:latest'
                 }
                 }
             }
