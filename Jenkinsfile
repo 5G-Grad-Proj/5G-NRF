@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sh(script: """
                     git clone --mirror https://github.com/free5gc/free5gc-compose
-                    cd free5gc
+                    cd free5gc-compose
                     make
                     docker images -a
                 """)
