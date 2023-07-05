@@ -23,9 +23,9 @@ pipeline {
         stage('docker build') {
             steps {
                 sh(script: """
-                    sudo docker images -a
-                    sudo docker build -t gradproj/5G-NRF:latest . 
-                    sudo docker images -a
+                    docker images -a
+                    docker build -t gradproj/5G-NRF:latest . 
+                    docker images -a
                 """)
                     }
                     }
