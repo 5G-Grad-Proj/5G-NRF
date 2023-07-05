@@ -20,9 +20,14 @@ pipeline {
             }
         }
 
-        stage('Docker pull base image') {
+        stage('make base image') {
             steps {
-                sh 'docker pull free5gc/base'
+                sh(script: """
+                    git clone https://github.com/free5gc/free5gc
+                    cd free5gc
+                    make
+                    docker images -a
+                """)
             }
         }
 
