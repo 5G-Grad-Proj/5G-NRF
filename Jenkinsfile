@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    triggers {
+    githubPush()
+  }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub')
     }
@@ -21,9 +23,6 @@ pipeline {
         stage('docker build') {
             steps {
                 sh(script: """
-                    cd Dockerfile/
-                    make base
-                    cd nf_nrf/
                     sudo docker images -a
                     sudo docker build -t gradproj/5G-NRF:latest . 
                     sudo docker images -a
@@ -32,26 +31,29 @@ pipeline {
                     }
         
         stage('Pushing to Dockerhub') {
-                steps {
-                    sh 'docker push gradproj/5G-NRF:latest'
-                }
-                }
+            steps {
+                sh 'docker push gradproj/5G-NRF:latest'
+            }
+        }
 
         stage('Build and Package Helm Chart') {
             steps {
-                sh 'helm package ./helm'
+                sh 'helm package ./helm/'
             }
         }
+
         stage('Configure Kubernetes Context') {
             steps {
-                sh 'aws eks --region $AWS_REGION update-kubeconfig --name <cluster-name>'
+                sh 'aws eks --region $AWS_REGION update-kubeconfig --name 9G-Core-Net'
             }
         }
+
         stage('Deploy Helm Chart') {
             steps {
                 sh 'helm upgrade --install nrf ./helm/'
             }
         }
+
         stage('Deploy to EKS') {
                 steps {
                     sh 'docker push gradproj/5G-NRF:latest'
