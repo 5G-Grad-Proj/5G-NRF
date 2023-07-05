@@ -20,17 +20,6 @@ pipeline {
             }
         }
 
-        stage('make base image') {
-            steps {
-                sh(script: """
-                    git clone https://github.com/free5gc/free5gc-compose
-                    cd free5gc-compose
-                    make
-                    docker images -a
-                """)
-            }
-        }
-
         stage('docker build') {
             steps {
                 sh(script: """
