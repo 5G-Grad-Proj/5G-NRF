@@ -23,7 +23,7 @@ pipeline {
         stage('make base image') {
             steps {
                 sh(script: """
-                    git clone --mirror https://github.com/free5gc/free5gc
+                    git clone --mirror https://github.com/free5gc/free5gc-compose
                     cd free5gc
                     make
                     docker images -a
