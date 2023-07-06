@@ -20,6 +20,12 @@ pipeline {
             }
         }
 
+        stage('Pulling base image from Dockerhub') {
+            steps {
+                    sh 'docker pull gradproj/nrf-base'
+            }
+        }
+
         stage('docker build') {
             steps {
                 sh(script: """
