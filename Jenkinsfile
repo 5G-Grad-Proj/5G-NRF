@@ -49,7 +49,7 @@ pipeline {
             steps {
                 sh 'aws eks --region us-east-1 update-kubeconfig --name 9G-Core-Net'
                 sh 'pwd'
-                sh 'sudo helm upgrade --install nrf ./helm/'
+                sh 'helm upgrade --install nrf ./helm/'
             }
         }
 
