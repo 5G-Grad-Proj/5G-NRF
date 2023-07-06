@@ -38,7 +38,7 @@ pipeline {
 
         stage('Scan Image for Common Vulnerabilities and Exposures') {
             steps {
-                sh 'trivy image gradproj/5g-nrf'
+                sh 'trivy image gradproj/5g-nrf --output trivy-report.json'
             }
         }
         stage('Pushing to Dockerhub') {
@@ -63,6 +63,12 @@ pipeline {
             steps {
                 sh 'helm upgrade --install nrf ./helm/'
             }
+        }
+    }
+    post {
+        always {
+            // Archive the Trivy report
+            archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
         }
     }
 }
