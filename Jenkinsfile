@@ -33,9 +33,14 @@ pipeline {
                     docker build -t gradproj/5g-nrf:latest . 
                     docker images -a
                 """)
-                    }
-                    }
+            }
+        }
 
+        stage('Scan Image for Common Vulnerabilities and Exposures') {
+            steps {
+                sh 'trivy image gradproj/5g-nrf'
+            }
+        }
         stage('Pushing to Dockerhub') {
             steps {
                 sh 'docker push gradproj/5g-nrf:latest'
