@@ -70,14 +70,8 @@ pipeline {
         always {
             // Archiving Test Result
             archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
-
-            // Cleaning Up
-            stage('Cleaning Up') {
-                steps {
-                    sh 'docker rmi gradproj/5g-nrf'
-                    sh 'docker rmi gradproj/nrf-base'
-                }
-            }
+            sh 'docker rmi gradproj/5g-nrf'
+            sh 'docker rmi gradproj/nrf-base'
         }
     }
 }
