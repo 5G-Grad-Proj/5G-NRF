@@ -5,9 +5,6 @@ pipeline {
   }
     environment {
         DOCKERHUB_CREDENTIALS = credentials('Dockerhub')
-        // AWS_ACCESS_KEY_ID     = credentials('AWS').AWS_ACCESS_KEY_ID
-        // AWS_SECRET_ACCESS_KEY = credentials('AWS').AWS_SECRET_ACCESS_KEY
-        AWS_DEFAULT_REGION    = 'us-east-1'
         }
 
     stages {
@@ -48,21 +45,13 @@ pipeline {
         stage('Configure Kubernetes Context') {
             steps {
                 sh 'aws eks --region us-east-1 update-kubeconfig --name 9G-Core-Net'
-                sh 'pwd'
+            }
+        }
+
+        stage('Deploy Helm Chart on EKS') {
+            steps {
                 sh 'helm upgrade --install nrf ./helm/'
             }
         }
-
-        // stage('Deploy Helm Chart') {
-        //     steps {
-        //         sh 'helm upgrade --install nrf ./helm/'
-        //     }
-        // }
-
-        stage('Deploy to EKS') {
-                steps {
-                    sh 'docker push gradproj/5g-nrf:latest'
-                }
-                }
-            }
-        }
+    }
+}
