@@ -20,6 +20,7 @@ pipeline {
             }
         }
 
+
         stage('docker build') {
             steps {
                 sh(script: """
