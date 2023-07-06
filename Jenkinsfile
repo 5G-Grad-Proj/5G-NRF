@@ -44,7 +44,7 @@ pipeline {
 
         stage('Configure Kubernetes Context') {
             steps {
-                sh 'aws eks --region $AWS_REGION update-kubeconfig --name 9G-Core-Net'
+                sh 'aws eks --region us-east-1 update-kubeconfig --name 9G-Core-Net'
             }
         }
 
