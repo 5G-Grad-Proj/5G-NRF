@@ -65,15 +65,12 @@ pipeline {
             }
         }
     }
+
     post {
         always {
             // Archiving Test Result
             archiveArtifacts artifacts: 'trivy-report.json', fingerprint: true
-        }
-    }
 
-    post {
-        always {
             // Cleaning Up
             stage('Cleaning Up') {
                 steps {
